@@ -1,14 +1,36 @@
-// Part 3: Transforming Data
+// Part 4: Sorting and Manipulating Data
 let csvData = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
 let rows = csvData.split ("\n");
-let twoDimArray = [];
+let headings = rows[0].split(",").map(heading => heading.trim().toLowerCase());
+let dataObjects = [];
 
-for (let i = 0; i < rows.length; i++) {
-    let cells = rows[i].split(",");
-    twoDimArray.push(cells);
+// Create array of objects from CSV data
+for (let i = 1; i < rows.length; i++) {
+    let cells = rows[i].split(",").map(cell => cell.trim());
+    let rowObject = {};
+    for (let j = 0; j < cells.length; j++) {
+        rowObject[headings[j]] = cells[j];
+    }
+    dataObjects.push(rowObject);
 }
 
-let cachedData = twoDimArray;
+// Remove the last element
+dataObjects.pop();
 
-console.log(cachedData);
+// Insert new object at index 1
+dataObjects.splice(1, 0, { id: "48", name: "Barry", occupation: "Runner", age: "25" });
+
+// Add new object to the end of the array
+dataObjects.push({ id: "7", name: "Bilbo", occupation: "None", age: "111" });
+
+console.log(dataObjects);
+
+// Calculate the average age
+let totalAge = 0;
+for (let i = 0; i < dataObjects.length; i++) {
+    totalAge += parseInt(dataObjects[i].age);
+}
+let averageAge = totalAge / dataObjects.length;
+
+console.log(`The average age is: ${averageAge}`);
 
