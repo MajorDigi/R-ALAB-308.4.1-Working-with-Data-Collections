@@ -1,6 +1,5 @@
-// Part 4: Sorting and Manipulating Data
-let csvData = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
-let rows = csvData.split ("\n");
+let csvData = "ID, Name, Occupation, Age\n42, Bruce, Knight, 41\n57,Bob, Fry Cook, 19\n63, Blaine, Quiz Master, 58\n98, Bill, Doctor's Assistant, 26";
+let rows = csvData.split("\n");
 let headings = rows[0].split(",").map(heading => heading.trim().toLowerCase());
 let dataObjects = [];
 
@@ -33,4 +32,18 @@ for (let i = 0; i < dataObjects.length; i++) {
 let averageAge = totalAge / dataObjects.length;
 
 console.log(`The average age is: ${averageAge}`);
+
+// Transform data back to CSV format
+// Create the header row
+let headerRow = Object.keys(dataObjects[0]).join(", ");
+
+// Create rows from data objects
+let csvRows = dataObjects.map(obj => {
+    return Object.values(obj).join(", ");
+});
+
+// Combine header and rows into a single CSV string
+let finalCsvData = [headerRow].concat(csvRows).join("\n");
+
+console.log(finalCsvData);
 
